@@ -259,7 +259,7 @@ If you configure the Azure Storage blobs option for a log type, you need a clien
 For logs stored in the App Service file system, the easiest way is to download the ZIP file in the browser at:
 - Linux/Container apps: ```https://<app-name>.scm.azurewebsites.net/api/log/docker/zip```
 - Windows apps: ```https://<app-name>.scm.azurewebsites.net/api/dump```
-## Configure security certificates
+### Configure security certificates
 Azure App Service has tools that let you create, upload, or import a private certificate or a public certificate into App Service.
 
 A certificate uploaded into an app is stored in a deployment unit that is bound to the app service plan's  resource group and region combination (internally called a _webspace_). This makes the certificate accessible to other apps in the same resource group and region combination.
@@ -272,7 +272,7 @@ The table below details the options you have for adding certificaties in App Ser
 |Import a certificate from Key Vault|Useful if you use Azure Key Vault to manage your certificates.|
 |Upload a private certificate|If you already have a private certificate from a third-party provider, you can upload it.|
 |Upload a public certificate|Public certificates are not used to secure custom domains, but you can load them into your code if you need them to access remote resources.|
-### Private certificate requirements
+#### Private certificate requirements
 The free **App Service managed certificate** and the **App Service certificate** already satisfy the requirements of App Service. If you want to use a private certificate in App Service, your certificate must meet the following requirements:
 - Exported as a password-protected PFX file, encrypted using triple DES.
 - Contains private key at lease 2048 bits long.
@@ -280,7 +280,7 @@ The free **App Service managed certificate** and the **App Service certificate**
 To secure a custom domain in a TLS binding, the certificate has addtional requirements:
 - Contains an Extended Key Usage for server authentication (OID = 1.3.6.5.5.7.3.1)
 - Signed by a trusted certificate authority.
-### Creating a free managed certificate
+#### Creating a free managed certificate
 To create custom TLS/SSL bindings or enable client certificates for your App Service app, your App Service plan must be in the **Basic**, **Standard**, **Premium**, or **Isolated** tier. Custom SSL is not supported in the **F1** or **D1** tier.
 The free App Service managed certificate is a turn-key solution for securing your custom DNS name in App Service. It's a TLS/SSL server certificate that's fully managed by App Services and renewed continuously and automatically in six-moths incremetns, 45 days before expiration. You create the certificate and bind it to a custom domain, and let App Service do the rest.
 The free certificate comes with the following limitations:
@@ -290,7 +290,7 @@ The free certificate comes with the following limitations:
 - Is not supported on App Service Environment (ASE).
 - Is not supported with root domains that are integrated with Traffic Manager.
 If a certificate is for a CNAME-mapped domain, the CNAME must be mapped directly to ```<app-name>.azurewebsites.net```
-### Import an App Service Certificate
+#### Import an App Service Certificate
 If you purchase an App Service Certificate from Azure, Azure manages the following tasks:
 - Takes care of the purchase process from GoDaddy.
 - Performs domain verification on the certificate.
@@ -300,7 +300,7 @@ If you purchase an App Service Certificate from Azure, Azure manages the followi
 If you already hva a working App Service certificate, you can:
 - Import the certificate into App Service.
 - Manage the certificate, such as renew, rekey, and export it.
-### Upload a private certificate
+#### Upload a private certificate
 If your certificate authority gives you multiple certificates in the certificate chain, you need to merge the certificates in order. Then you can Export your merged TLS/SSL certificate with the private key that your certificate request was generated with.
 
 If you generated your certificate request using OpenSSL, then you have created a private key file. To export your certificate to PFX, run the following command. Replace the placeholders ```<private-key-file>``` and ```<merged-certificate-file>``` with the paths to your private key and your merged certicate file.
@@ -308,11 +308,11 @@ If you generated your certificate request using OpenSSL, then you have created a
 openssl pckcs12 -export -out myserver.pfx -inkey <private-key-file> -in <merged-certicate-file>
 ```
 When prompted, define an export password. You'll use this password when uploading your TLS/SSL certifcate to App Service.
-### Enforce HTTPS
+#### Enforce HTTPS
 By default, anyone can still access your app using HTTP. You can redirect all HTTP requests t the HTTPS port by navigating to your app page and, select **TLS/SSL settings**. Then, in **HTTPS Only**, select **On**.
-## Manage app features
+### Manage app features
 Feature management is a modern software-development practice that decouples feature release from code deployment and enables quick changes to feature availability on demand. It uses a technique called feature falgs to dynamically administer a feature's lifecycle.
-### Basic concepts
+#### Basic concepts
 Here are several new terms related to feature management:
 - **Feature flag**: A feature flag is a variable with a binary state of _on_ or _off_. The fature flag also has an associated code block. The state of the feature flag triggers whether the code block runs or not.
 - **Feature manager**: A feature manager is an application package that handles the lifecycle of all the feature flags and update their states.
@@ -321,7 +321,7 @@ Here are several new terms related to feature management:
 An effective implementation of feature management consists of at least two components working in concert:
 - An applicaiton that makes use of feature flags.
 - A separate repository that stores the feature flags and their current state.
-### Feature flag usage in code
+#### Feature flag usage in code
 The basic patter for implementing feature flags in an application is simple. You can think of afeature flag as a Booelean state variable used with an ```if``` conditional statement in your code:
 ```C#
 if (featureFlag) {
@@ -344,7 +344,7 @@ if (featureFlag) {
   // This following code will run if the featureFlag value is false
 }
 ```
-### Feature flag declaration
+#### Feature flag declaration
 Each feature flag has two parts: a name and a list of one or more filters that are used to evaluate if a feature's state is _on_. A filter defines a use case for when na feature should be turned on.
 
 When a feature flag has multiple filters, the filter list is traversed in order until one of the filters determines the feature should be enabled. A that point, the feature flag is _on_, and any remaining filter results are skipped. If no filter indicates the feature should be enabled, the feature flag is _off_.
@@ -365,7 +365,98 @@ The feature manager supports _appsettings.json_ as a configuration source for fe
   }
 }
 ```
-### Feature flag repository
+#### Feature flag repository
 To use feature flags effectively, you need to externalize all the feature flags used in an application. This approach allows you to change feature flag states without modifying and redeploying the application itself.
 
 Azure App Configuration is designed to be a centralized repository for feature flags. You can use it to define different kinds of feature flags and manipulate theri states quickly and confidently. You can then use the App Configuration libraries for various programming language frameworks to easily access these feature flags from your application.
+## Scale apps in Azure App Service
+Autoscaling enables a system to adjust the resources required to meet the varying demand from users, while controlling the costs associated with these resources.
+
+Autoscaling requires you to configure autoscale rules that specify the conditions under which resources should be added or removed.
+### Examine autoscale factors
+Autoscaling can be triggered according to a schedule, or by assessing whether the system is running short on resources.
+#### What is autoscaling?
+Autoscaling is a cloud system or process that adjusts available resources based on the current demand. Autoscaling performs scaling _in and out_, as opposed to scaling _up and down_.
+#### Azure App Service Autoscaling
+It detects situations where additional resources are required to handle an increasing workload, and ensures those resources are available before the system becomes overloaded.
+Autoscaling responds to changes in the environment by adding or removing web servers and balancing the load between them.
+##### Autoscaling rules
+A rule specifies the treshold for a metric, and triggers an autoscale event when this treshold is crossed. Autoscaling can also deallocate resources when the workload has diminished.
+Define your autoscaling rules carefully (DDOS attacks for example).
+#### When should you consider autoscaling?
+It's a suitable solution when hosting any application when you can't easily predict the workload in advance, or when the workload is likely to vary by date or time.
+Autoscaling improves availability and fault tolerance.
+Autoscaling works by adding or removing web servers.
+Autoscaling isn't the best approach to handling long-term growth.
+Autoscaling has an overhead associated with monitoring resources and determining whether to trigger a scaling event, if you can anticipate the rate of growth, manually scaling the system over time may be a more cost effective approach.
+The fewer the number of instances initially, the less capacity you have to handle an increasing workload while autoscaling spins up additional instances.
+### Identify autoscale factors
+Autoscaling enables you to specify the conditions under which a web app should be scaled out, and back in again.
+Effective autoscaling ensures sufficient resources are available to handle large volumes of requests at peak times, while managing costs when the demand drops.
+#### Autoscaling and the App Service Plan
+Autoscaling is a feature of the App Service Plan used by the web app. When the web app scales out, Azure start new instances of the hardware defined by the App Service Plan to the app.
+To prevent runaway autoscaling, an App Service Plan has an instance limit. Plans in ore expensive pricing tiers have a higher limit. Autoscaling cannot create more instances than this limit.
+#### Autoscale conditions
+You indicate how to autoscale by screating autoscale conditions. Azure provides two options for autoscaling:
+- Scale based on a metric, such as the length of the disk queue, or the number of HTTP requests awaiting processing.
+- Scale to a specific instance count according to a schedule.
+Scaling to a specific instance count only enables you to scale out to a defined number of instances. If you need to scale out incrementally, you can combine metric and schedule-based autoscaling in the same autoscale condition.
+You can create multiple autoscale conditions to handle different schedules and metrics. Azure will autoscale your service when any of these conditions apply. An App Service Plan also has a default condition that will be used if none of the other conditions are applicable. This condition is always active and doesn't have a schedule.
+#### Metrics for autoscale rules
+Autoscaling by metric requires that you define one or more autoscale rules. An autoscale rule specifies a metric to monitor, and how autoscaling should respond when this metric crosses a defined treshold. The metrics you can monitor for a web app are:
+- **CPU Percentage**. This metric is an indication of the CPU utilization across all instances.
+- **Memory Percentage**. This metric captures the memory occupancy of the application across all instances.
+- **Disk Queue Length**. This metric is a measure of the number of outstanding I/O requests across all instances.
+- **Data In**. This metric is the number of bytes sent by all isntances.
+- **Data Out**. This metric is the number of bytes sent by all instances.
+#### How an autoscale rule analyzes metrics
+ Autoscaling works by analyzing trends in  metric values over time across and all instances. Analysis is a multi-step process.
+
+In the first step, an autoscale rule aggregates the values retrieved for a metric for all instances across a period of time known as the _time grain_. The aggregated value is known as the _time aggregation_. The options avaliable are _Average_, _Minimum_, _Maximum_, _Total_, _Last_, and _Count_.
+
+An interval of one minute is a very short interval in which to determine whether any change in metric is long-lasting enough to make autoscaling wortwhile. So, an autoscale rule performs a second step that performs a further aggregation of the value calculated by the _time aggregation_ over a longer, user-specified period, known as the _Duration_. The minimum _Duration_ is 5 minutes.
+#### Autoscale actions
+When an autoscale rule detects that a metric has crossed a threshold, it can perform an autoscale action. An autoscale action can be _scale-out_ or _scale-in_. A scale-out action increases the number of instances, and a scale-in action reduces the instance count. An autoscale action uses an operator (such as _less than_, _greather than_, _equal to_, and so on) to determine how to react to the threshold.
+
+An autoscale action has a _cool down_ period, specified in minutes. During this interval, the scale rule won't be triggered again. The minimum cool down period is five minutes.
+#### Pairing autoscale rules
+Consider defining autoscale rules in pairs in the same autoscale condition. One autoscale rule to scale-in, on autoscale rule to scale-out.
+#### Combining autoscale rules
+A single autoscale condition can contain several autoscale rules. However, the autoscale rules in an autoscale condition don't have to be directly related.
+When determining whether to scale out, the autoscale action will be perfomred if any of the scale-out rules are met. When scaling in, the autoscale wil run **only if all** of the scale-in rules are met.
+### Enable autoscale in App Service
+#### Enable autoscaling
+To get started with autoscaling navigate to your App Service plan in the Azure portal and select **Scale out (App Service plan)** in the **Settings* group left navigation pane.
+Selecting **Custom autoscale** reveals condition groups you can use to manage your scale settings.
+#### Add scale conditions
+Once you enable autoscaling, you can edit the automatically created default scale condition, and you can add your own custom scale conditions.
+The default scale condition is executed when none of the other scale conditions are active.
+A metric-based scale condition can also specify the minimum and maximum number of instances to create. Addtionally, all scale conditions other than the default may include a schedule indicating when the condition should be applied.
+#### Create scale rules
+A metric-based scale condition contains one or more scale rules. You use the **Add a rule** link to add your own custom rules.
+#### Monitor autoscaling activity
+The Azure portal enables you to track when autoscaling has occurred through the **Run history** chart. This chart shows how the number of instances varies over time, and which autoscale conditions caused each change.
+You can use the **Run history** chart in conjunction with the metrics shown on the **Overview** page to correlate the autoscaling events with resource utilization.
+### Explore autoscale best practices
+#### Autoscale concepts
+- An autoscale setting scales instances horizontally, which is _out_ by increasing the instances and _in_ by decreasing the number of instances. An autoscale setting has a maximum, minimum, and default value of instances.
+- An autoscale job always reads the associated metric to scale by, checking if it has crossed the configured threshold for scale-out or scale-in.
+- All thresholds are calculated at an instance level.
+- All autoscale successes and failures are logged to the Activity Log. You can then configure an activity log alert so that you can be notified via email, SMS, or webhooks whenever there is activity.
+#### Autoscale best practices
+Use the following best practices as you create your autoscale rules.
+- Ensure the maximum and minimum values are different and have an adequate margin between them
+- Choose the appropriate statistic for your diagnostic metric (_Average_, _Minimum_, _Maximum_ and _Total_)
+- Choose the thresholds carefully for all metric types
+  - We _do not recommend_ autoscale settings with the same or very similar threshold values for out and in conditions.
+  - We recommend choosing an adequate margin between the scale-out and in thresholds.
+- Considerations for scaling when multiple fules are configured in a profile
+  On _scale-out_, autoscale runs if any rule is met. On _scale-in_, autoscale require all rules to be met.
+- Always select a safe default instance count
+- Configure autoscale notifications
+  - Autoscale will post to the Acitivity Log if any of the following conditions occur:
+    - Autoscale issues a scale operation
+    - Autoscale service successfully completes a scale aciton
+    - Autoscale service fails to take a scale action
+    - Metrics are not available for autoscale service to make a scale decision.
+    - Metrics are available (recovery) again to make a scale decision.

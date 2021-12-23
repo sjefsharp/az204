@@ -13,3 +13,5 @@ A feature flag is a variable with a binary state of _on_ or _off_. The feature f
 A feature manager is an application package that handles the lifecycle of all the feature flags in an application. The feature manager typically provides additional functionality, such as caching feature flags and updating their states.
 ## Filter (App Features)
 A filter is a rule for evaluating the state of a feature flag.
+## Autoscaling
+A cloud system or process that adjusts available resources based on the current demand. Autoscaling performs scaling _in and out_, as opposed to scaling _up and down_.
