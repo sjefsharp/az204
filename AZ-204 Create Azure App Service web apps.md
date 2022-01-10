@@ -1,17 +1,17 @@
 # AZ-204: Create Azure App Service web apps
 ## Explore Azure App Service
 ### Examine Azure App Service
-Azure App Service is an HTTP-based service for hosting web appilcation, REST APIs, and monile back ends.
+Azure App Service is an HTTP-based service for hosting web appilcation, REST APIs, and mobile back ends.
 #### Built-in auto scale support
 Baked into Azure App Service is the ability to scale up/down (RAM/CORES) or scale out/in (increase/decrease machine instances).
 #### Continuous integration/deployment support
-The Azure portal provides out-of-the-box continuous integration and deployment with Azure DevOps, GitHub, Bitbucket, FTP, or a local Git repository on your development machine. Connect your web app with any of the above sources and App Service will do the rest for you by auto-syncing code and any future changes on the code into the web appp.
+The Azure portal provides out-of-the-box continuous integration and deployment with Azure DevOps, GitHub, Bitbucket, FTP, or a local Git repository on your development machine. Connect your web app with any of the above sources and App Service will do the rest for you by auto-syncing code and any future changes on the code into the web app.
 #### Deployment slots
-Using te Azure portal, or command-line tools, you caneasily add deployment slots to an App Service web app. You can create a staging deployment slot where you can push your code to test on Azure. You can easily swap the staging deployment slot with the production slot. A few simple mouse clicks in Azure.
+Using te Azure portal, or command-line tools, you can easily add deployment slots to an App Service web app. You can create a staging deployment slot where you can push your code to test on Azure. You can easily swap the staging deployment slot with the production slot. A few simple mouse clicks in Azure.
 #### App Service on Linux
 App Service can also host web apps natively on Linux for supported application stacks. It can also run custom Linux containers (Web App for Containers). App Service on Linux supports a number of language specific built-in images. Supported languages: Node.js, Java, PHP, Python, .Net Core and Ruby. If the runtime is not supported, you can deploy it with a custom container.
 
-The languages, and their supported versions, are update on a regular basis. You can retreive the current list by using the following command in the Cloud Shell.
+The languages, and their supported versions, are updated on a regular basis. You can retreive the current list by using the following command in the Cloud Shell.
 ```bash
 az webapp list-runtimes --linux
 ```
@@ -24,7 +24,7 @@ App Service on Linux does have some limitations:
 ### Examine Azure App Service plans
 In App Service, an app (Web Apps, API Apps, Mobile Apps or Azure Functions) always runs in an _App Service plan_. An App Service plan defines a set of compute resources for a web app to run. One or more apps can be configured to run on the same computing resources.
 
-When you create an App Service plan in a certain region, as set of compute resources is created for that plan in that region. Each App Service plan defines:
+When you create an App Service plan in a certain region, a set of compute resources is created for that plan in that region. Each App Service plan defines:
 - Region
 - Number of VM instances
 - Size of VM instances (Small, Medium, Large)
@@ -42,10 +42,10 @@ In the **Free** and **Shared** tiers, an app recieves CPU minutes on a shared VM
 - If multiple apps are in the same App Service plan, they all share the same VM instances.
 - If you have multiple deployments slots for an app, all deployments slots also run on the same VM instances.
 - If you enable diagnostic logs, perform backups or run WebJobs, they also use CPU cycles and memory on these VM instances.
-In this way, the App Service plan is the **scale unit* of the App Service app. If the plan is configured for autoscaling, then all apps in the plan are scaled out together based on autoscale settings.
+In this way, the App Service plan is the **scale unit** of the App Service app. If the plan is configured for autoscaling, then all apps in the plan are scaled out together based on autoscale settings.
 #### What if my app needs more capabilities or features?
 Your App Service plan can be scaled up and down at any time. It is as simple as changing the pricing tier of the plan.
-You can potentially save money by putting multiple apps into one App Service plan. However, since apps in the same App Service plan all share the same compute resources you need to understand the capacity of the existing App Sewrvice plan and the expected load for the new app.
+You can potentially save money by putting multiple apps into one App Service plan. However, since apps in the same App Service plan all share the same compute resources you need to understand the capacity of the existing App Service plan and the expected load for the new app.
 
 Isolate your app into a new App Service plan when:
 - The app is resource-intensive.
@@ -54,16 +54,16 @@ Isolate your app into a new App Service plan when:
 ### Deploy to App Service
 App Service supports both automated and manual deployment.
 #### Automated deployment
-Automated deployment or continuous integration, is a process used to push out new featured and bug fixes in a fast and repetitive patter with minimal impact on end users.
+Automated deployment or continuous integration, is a process used to push out new featured and bug fixes in a fast and repetitive pattern with minimal impact on end users.
 Azure supports automated deployment directly from several sources:
 - **Azure DevOps**: You can push your code to Azure DevOps, build your code inthe cloud, run the tests, generate a release from the code, and finally, push your cot to an Azure Web App.
-- **GitHub** Azure supports automated deployment directly from GitHub. When you connect your GitHub repository to Azure for automated deployments, any chacnes you push to your production branch on GitHub will be automatically deployed for you.
+- **GitHub** Azure supports automated deployment directly from GitHub. When you connect your GitHub repository to Azure for automated deployments, any changes you push to your production branch on GitHub will be automatically deployed for you.
 - **Bitbucket**: With its similarities to Github, you can configure automated deployment with Bitbucket.
 #### Manual deployment
 - **Git**: App Service web apps feature a Git URL that you can add as a remote repository. Pushing to the remote repository will deploy your app.
 - **CLI**: ```az webapp up``` is a feature of the ```az``` command-line interface that packages your app and deploys it. Unlike other deployment methods, ```az webapp up``` can create a new App Service web app for you if you haven't already created one.
 - **Zip deploy**: User ```curl``` or a similar HTTP utility to send a ZIP of your applicaiton files to App Service.
-- **FTS/S**: Is a traditional way of pushing your code to many hosting environments, including App Service.
+- **FTP/S**: Is a traditional way of pushing your code to many hosting environments, including App Service.
 #### Use deployment slots
 Whenever possible, use deployment slots when deploying a new production build. When using a Standard App Service Plan tier or better, you can deploy your app to a staging environment and then swap your staging and production slots. The swap operation warms up the necessary worker instances to match your production scale, thus eliminating downtime.
 ### Explore authentication and authorization in App Service
@@ -71,8 +71,8 @@ Azure App Service provides built-in authentication and authorization support, so
 #### Why use the built-in authentication?
 You are not required to use App Service for authentication and authorisation. 
 
-The built-in authtentication feature for App Service and Azure Functions can save you time and effort by providing out-of-the-box authentication with federated identity providers, allowing you to focus on the rest of your application.
--Azure App Service allows you to integrate a variety of auth capabilities into your web apps or API without implementing them yourself.
+The built-in authentication feature for App Service and Azure Functions can save you time and effort by providing out-of-the-box authentication with federated identity providers, allowing you to focus on the rest of your application.
+- Azure App Service allows you to integrate a variety of auth capabilities into your web apps or API without implementing them yourself.
 - It's built directly into the platform and doesn't require any particular language, SDK, security expertise, or even any code to utilize.
 - You can integratie with multiple login providers.
 #### Identity providers
@@ -88,7 +88,7 @@ When you enable authentication and authorization with one of these providers, it
 #### How it works
 The authentication and authorization module runs in the same sandbox as your application code. When it's enabled, every incoming HTTP request passes through it before being handled by your application code. This module handles several things for your app:
 - Authenticates users with the specified provider
-- validates, stores, and refreshes tokens
+- Validates, stores, and refreshes tokens
 - Manages the authenticated session
 - Injects identity information into request headers
 The module runs separately from your application code and is configured using app settings. No SDKs, specific languages, or changes to your application code are required.
@@ -109,13 +109,13 @@ The authentication flow is the same for all providers, but differs depending on 
 For client browsers, App Service can automatically direct all unauthenticated users to ```/.auth/login/<provider>```. You can also present users with one or more ```/.auth/login/<provider>``` links to sign in to your app using their provider of choice.
 #### Authorization behavior
 In the Azure portal, you can configure App Service with a number of behaviors when an incoming request is not authenticated.
-- **ALlow unauthenticated requests**: This option defers authorization of unauthenticated traffic to your application code.
+- **Allow unauthenticated requests**: This option defers authorization of unauthenticated traffic to your application code.
 - **Require authentication**: This option will reject any unauthenticated traffic to your application. This rejection can be a redirect action to one of the configured identity providers. In these cases, a browser client is redirected to ```/.auth/login/<provider>``` for the provider you choose. If the anonymous request comes from a native mobile app, the returned response is an ```HTTP 401 Unauthorized```. You can also configure the rejection to be an ```HTTP 401 Unauthorized``` or ```HTTP 403 Forbidden``` for all requests.
 ### Discover App Service Networking features
 By default, apps hosted in App Service are accessible directly through the internet and can reach only internet-hosted endpoints.
-There are tow main deployment types for Azure App Service. The multitenant public service hosts App Service plans in the Free, Shared, Basic, Standard, Premium, PremiumV2, and PremiumV3 pricing SKUs. There is also the single-tenant App Service Environment (ASE) hosts Isolated SKU App Service plans directly on your Azure virtual network.
+There are two main deployment types for Azure App Service. The multitenant public service hosts App Service plans in the Free, Shared, Basic, Standard, Premium, PremiumV2, and PremiumV3 pricing SKUs. There is also the single-tenant App Service Environment (ASE) hosts Isolated SKU App Service plans directly on your Azure virtual network.
 #### Multitenant App Service networking features
-Azure App Service is a distributed system. The roles that handle incoming HTTP or HTTPS requests are called _front ends_. The roles that host the customer workload are called _workers_. All the roles in an App Service deployment exist in a multinenant nwetwork.
+Azure App Service is a distributed system. The roles that handle incoming HTTP or HTTPS requests are called _front ends_. The roles that host the customer workload are called _workers_. All the roles in an App Service deployment exist in a multinenant network.
 Instead of connecting the networks, you need features to handle the various aspects of application communication.
 |Inbound features|Outbound features|
 |-|-|
@@ -134,10 +134,10 @@ The Free and Shared SKU plans host customer workloads on multitenant workers. Th
 #### Outbound addressess
 The worker VMs are broken down in large part by the App Service plans. When you change the VM family, you get a different set of outbound addresses.
 
-There are a number of addresses that are used for outbound calls. The outbound addresses used by your app for making outbound calls are listed in the properties for your app. These address adre shared by all the apps running on the same worker VM family in the App Service deployment. If you want to see all the addresses that your app might use in a scalse unit, there's property called ```possibleOutboundAddresses``` that wil list them.
+There are a number of addresses that are used for outbound calls. The outbound addresses used by your app for making outbound calls are listed in the properties for your app. These address shared by all the apps running on the same worker VM family in the App Service deployment. If you want to see all the addresses that your app might use in a scale unit, there's property called ```possibleOutboundAddresses``` that wil list them.
 
 #### Find outbound IPs
-To find the outbound IP addresses currently used by your app in the Azure portal, click **Properties** in you app's left-hand navigation.
+To find the outbound IP addresses currently used by your app in the Azure portal, click **Properties** in your app's left-hand navigation.
 You can find the same information by running the following command in the Cloud Shell. They are listed in the **Additional Outbound IP Addresses** field.
 ```bash
 az webapp show \
@@ -151,7 +151,7 @@ To find all possible outbound IP addresses for your app, regardless of pricing t
   az webapp show \
     --resource-group <group_name> \
     --name <app_name> \
-    -- query possibleOutboundIpAddresses \
+    --query possibleOutboundIpAddresses \
     --output tsv
 ```
 ### Exercise: Create a static HTML web app by using Azure Cloud Shell
@@ -196,11 +196,11 @@ In the **Configuration > Path mappings** section you can configure handler mappi
 #### Windows apps (uncontainerized)
 Handler mappings let you add custom script processors to handle requests for specific file extensions. To add a custom handler, click **New handler**. Configure the handler as follows:
 - **Extension**: The file extension you want to handle, such as _*.php_ or _handler.fcgi_.
-- **Script processor**: The absolute path of the script porcessor to you. Requests to files that match the file extension are processed by the script processor. Use the path ```D:\home\site\wwwroot``` to refer to your app's root directory.
+- **Script processor**: The absolute path of the script processor to you. Requests to files that match the file extension are processed by the script processor. Use the path ```D:\home\site\wwwroot``` to refer to your app's root directory.
 - **Arguments**: Optional command-line arguments for the script processor.
 
 Each app has the default root path (```/```) mapped to ```D:\home\site\wwwroot```, where your code is deployed by default.
-To configure virtual appications and directories, specify each virtual directory and its corresponding physical path relative to the website root (```D:\home```). To mark a virtual directory as a web application, clear the **Directory** checbox.
+To configure virtual applications and directories, specify each virtual directory and its corresponding physical path relative to the website root (```D:\home```). To mark a virtual directory as a web application, clear the **Directory** checbox.
 #### Linux and containerized apps
 You can add custom storage for your containerized app. Containerized apps include all Linux apps and also the Windows and Linux custom containers running on App Service. Click **New Azure Storage Mount** and configure your custom storage as follows:
 - **Name**: Display name
@@ -241,7 +241,7 @@ You can add custom storage for your containerized app. Containerized apps includ
 3. When finished, select **Save**.
 #### Add log messages in code
 For example:
-- ASP.NET application can use the ```System.Diagnostics.Trace```class to log information to the application diagnostics log. For example:
+- ASP.NET application can use the ```System.Diagnostics.Trace``` class to log information to the application diagnostics log. For example:
 ```C#
 System.Diagnostics.Trace.TraceError("If you're seeing this, something bad happened.")
 ```
@@ -282,7 +282,7 @@ To secure a custom domain in a TLS binding, the certificate has addtional requir
 - Signed by a trusted certificate authority.
 #### Creating a free managed certificate
 To create custom TLS/SSL bindings or enable client certificates for your App Service app, your App Service plan must be in the **Basic**, **Standard**, **Premium**, or **Isolated** tier. Custom SSL is not supported in the **F1** or **D1** tier.
-The free App Service managed certificate is a turn-key solution for securing your custom DNS name in App Service. It's a TLS/SSL server certificate that's fully managed by App Services and renewed continuously and automatically in six-moths incremetns, 45 days before expiration. You create the certificate and bind it to a custom domain, and let App Service do the rest.
+The free App Service managed certificate is a turn-key solution for securing your custom DNS name in App Service. It's a TLS/SSL server certificate that's fully managed by App Services and renewed continuously and automatically in six-moths increments, 45 days before expiration. You create the certificate and bind it to a custom domain, and let App Service do the rest.
 The free certificate comes with the following limitations:
 - Does not support wildcard certificates.
 - Does not support usage as a client certificate by certificate thumbprint.
@@ -297,7 +297,7 @@ If you purchase an App Service Certificate from Azure, Azure manages the followi
 - Maintains the certificate in Azure Key Vault.
 - Manages certificate renewal.
 - Synchronize the certificate automatically with the imported copies in App Service apps.
-If you already hva a working App Service certificate, you can:
+If you already have a working App Service certificate, you can:
 - Import the certificate into App Service.
 - Manage the certificate, such as renew, rekey, and export it.
 #### Upload a private certificate
@@ -311,7 +311,7 @@ When prompted, define an export password. You'll use this password when uploadin
 #### Enforce HTTPS
 By default, anyone can still access your app using HTTP. You can redirect all HTTP requests t the HTTPS port by navigating to your app page and, select **TLS/SSL settings**. Then, in **HTTPS Only**, select **On**.
 ### Manage app features
-Feature management is a modern software-development practice that decouples feature release from code deployment and enables quick changes to feature availability on demand. It uses a technique called feature falgs to dynamically administer a feature's lifecycle.
+Feature management is a modern software-development practice that decouples feature release from code deployment and enables quick changes to feature availability on demand. It uses a technique called feature flags to dynamically administer a feature's lifecycle.
 #### Basic concepts
 Here are several new terms related to feature management:
 - **Feature flag**: A feature flag is a variable with a binary state of _on_ or _off_. The fature flag also has an associated code block. The state of the feature flag triggers whether the code block runs or not.
@@ -322,7 +322,7 @@ An effective implementation of feature management consists of at least two compo
 - An applicaiton that makes use of feature flags.
 - A separate repository that stores the feature flags and their current state.
 #### Feature flag usage in code
-The basic patter for implementing feature flags in an application is simple. You can think of afeature flag as a Booelean state variable used with an ```if``` conditional statement in your code:
+The basic pattern for implementing feature flags in an application is simple. You can think of a feature flag as a Booelean state variable used with an ```if``` conditional statement in your code:
 ```C#
 if (featureFlag) {
   // Run the following code
@@ -460,3 +460,122 @@ Use the following best practices as you create your autoscale rules.
     - Autoscale service fails to take a scale action
     - Metrics are not available for autoscale service to make a scale decision.
     - Metrics are available (recovery) again to make a scale decision.
+
+You can also use an Activity Log alert to monitor the health of the autoscale engine.
+## Explore Azure App Service Deployment
+### Explore staging environments
+When you deploy your web app, you can use a seperate deployment slot instead of the default production slot when you're running in the **Standard**, **Premium**, or **Isolated** App Service plan tier. Deployment slots are live apps with their own host names. App content and configurations elements can be swapped between two deployment slots, including the production slot.
+
+Deploying your application to a non-production slot has the following benefits:
+- You can validate app changes in a staging deployment slot before swapping it with the production slot.
+- Deploying an app to a slot first andd swapping it into production makes sure that all instances of the slot are warmed up before being swapping into production. This eliminates downtime when you deploy your app.
+- After a swap, the slot with previously staged app now has the previous production app. If the changes swapped into the production slot aren't as you expect, you can perform the same swap immediately to get your "last know good site" back.
+
+Each App Service plan tier supports a different number of deployment slots. To find out the number of slots your app's tier supports, see App Service limits.
+
+To scale your app to a different tier, make sure that the target tier supports the number of slots your app already uses. The **Standard** tier supports only five deployment slots. 
+
+When you create a new slot the new deployment slot has no content, even if you clone the settings from a different slot. You can deploy to the slot from a different repository branch or a different repository.
+### Examine slot swapping
+When you swap slots, App Service does the following to ensure that the target slot doesn't experience downtime:
+1. Apply the following settings from the target slot to all instances of the source slot:
+  - Slot-specific app settings and connection string, if applicable.
+  - Continuous deployment settings, if enabled.
+  - App Service authentication settings, if enabled.
+  Any of these cases trigger all instances in the source slot to restart. During **swap with preview**, this marks the end of the first phase. The swap operation is paused, and you can validate that the source slot works correctly with the tagert slot's settings.
+2. Wait for every instance in the source slot to complete its restart. If any instance fails to restart, the swap operation reverts all changes to the source slot and stops the operation.
+3. If local cache is enabled, trigger local cache initialization by making an HTTP request to the application root ("/") on each instance of the source slot. Wait until each instance returns any HTTP response. Local cache initialization causes another restart on each instance.
+4. If auto swap is enabled with custom warm-up, trigger Appplication Initiation by making an HTTP request to the application root ("/") on each instance of the source slot.
+  - If ```applicationInitialization``` isn't specified, trigger an HTTP request to the application root of the source slot on each instance.
+  - If an instance returns any HTTP response, it's considerd to be warmed up.
+5. If all instances on the source slot are warmed up successfully, swap the two slots by switching the routing rules for the two slots. After this step, the target slot has the app that's previously warmed up in the source slot.
+6. Now that the source slot has the pre-swap app previously in the target slot, perform the same operation by applying all settings and restarting the instances.
+
+At any point of the swap operation, all work fo initializing the swapped apps happens on the source slot. The target slot remains online while the srouce slot is being prepared and warmed up, regardless of where the swap succeeds or fails.
+
+WHen you clone configuration from another deployment slot, the cloned configuration is editable. Some configuration elements follow the content across a swap (not slot specific), whereas other configuration elements stay in the same slot after a swap (slot specific). The following table shows the settings that change when you swap slots.
+|Settings that are swapped|Settings that aren't swapped|
+|-|-|
+|General settings, such as framework version, 32/64-bit, web sockets|Publishing endpoints|
+|App settings (can be configured to stick to a slot)|Custom domain names|
+|Connection strings (can be configured to stick to a slot)|Non-public certificates and TLS/SSL Settings|
+|Handler mappings|Scale settigns|
+|Public certificates|WebJobs schedulers|
+|WebJobs content|IP restrictions|
+|Hybrid connections *|Always On|
+|Virtual network integration|Diagnostic log settings|
+|Service endpointws|Cross-origin resource sharing (CORS)|
+|Azure Content Delivery Network *||
+\* Features marked with an asterisk are planned to be unswapped.
+
+To make settings swappable, add the app setting ```WEBSITE_OVERRIDE_PRESERVE_DEFAULT_STICKY_SLOT_SETTINGS``` in every slot of the app and set its value to ```0``` or ```false```.
+
+To configure an app settings or connections string to stick to a specific slot (not swapped), go to the Configuration page for that slot. Add or edit a setting, and then select **Deployment slot setting**. Selecting this check box tells App Service that the setting is not swappable.
+### Swap deployment slots
+You can swap deployment slots on your app's Deployment slots page and the Overview page. Before you swap an app from a deployment slot into production, make sure that production is your target slot and that all settings in the source slot are configured exactly as you want to have them in production.
+#### Manually swapping deployment slots
+To swap deployment slots:
+1. Go to your app's **Deployment slots** page and select **Swap**. The **Swap** dialog box shows settings in the selected source and target slot that will be changed.
+2. Select the desred **Source** and **Target** slots. Usually, the target is the production slot. Also, select the **Source Changes** and **Target Changes** tabs and verify that the configuration changes are expected. When you're finished, you can swap the slots immediately by selecting **Swap**.
+3. When you're finished, close the dialog box by selecting Close.
+#### Swap with preview (multi-phase swap)
+Before you swap into production as the target slot, validate that the app runs with the swapped settings. The source slot is also warmed up before the swap completion, which is desirable for mission-critical applications.
+
+When you perform a swap with preview, App Service performs the same swap operation but pause after the first step You can then verify the reulst on the stage slot before completing the swap.
+
+If you cancel the swap, App Service reapplies configuration elements to the source slot.
+
+To swap with preview:
+1. Follow the steps above in Swap deployment sltos but select **Perform swap with preview**.
+2. When you are ready to start the swap, select **Start Swap**.
+Preview the swap in the source slot by going to ```https://<app_name>-<source-slot-name>.azurewebsites.net```.
+3. When you are ready to complete the pending swap, select **Complete Swap** in **Swap action** and select **Complete Swap**.
+To cancel a pending swap, select **Cancel Swap** instead.
+4. When you are finished, close the dialog box by selecting **Close**.
+
+#### Configure auto swap
+Auto swap streamlines Azure DevOps scenarios where you want to deploy your app continuously with zero cold start and zero downtime for customers of the app. When auto swap is enabled from a slot into production, every time you push your code changes to that slot, App Service automatically swaps the app into production after it's warmed up in the source slot.
+
+To configure auto swap:
+1. Go to your app's resource page and select the deployment slot you want to configure to auto swap. The sessing is on the **Configuration** > **General settings** page.
+2. Set **Auto swap enabled** to **On**. Then select the desired target slot for Auto swap deployment slot, and select **Save** on the command bar.
+3. Execute a code push to the source slot. Auto swap happens after a short time, and the update is reflected at your target slot's URL.
+
+#### Specify custom warm-up
+Some apps might require custom warm-up actions before the swap. The ```applicationInitialization``` configuration element in web.config lets you specify custom initialization actions. The swap operation waits for this custom warm-up to finish before swapping with the target slot.
+```XML
+<system.webServer>
+  <applicationInitialization>
+    <add initializationPage="/" hostName="[app hostname]" />
+  </applicationInitialization>
+</system.webServer>
+```
+You can also customize the warm-up behavior with one or both of the following app settings:
+- ```WEBSITE_SWAP_WARMUP_PING_PATH```: The path to ping to warm up your site. Add this app setting by specifying a custom path that begins with a slash as the value. An example ```/statuscheck```. The default value is ```/```.
+- ```WEBSITE_SWAP_WARMUP_PING_STATUSES```: Valid HTTP response codes for the warm-up opreation. Add this app setting with a comma-seperated list of HTTP codes. An example is ```200,202```. If the returned status code isn't in the list, the warmup and swap operations are stopped. By default, all response codes are valid.
+
+#### Roll back and monitor a swap
+If any errors occur in the target slot after a slot swap restore the slots to their pre-swap states by swapping the same two slots immediately.
+If the swap operation takes a long time to complete, you can get information on the swap operation in the activity log.
+On your app's resource page in the portal, select **Activity log***.
+A swap operation appears in the log query as ```Swap Web App Slots```.
+
+### Route traffic in App Service
+By default, all client requests to the app's production URL (```http://<app_name>.azurewebsites.net) are routed to the production slot. You can route a portion of the traffic to another slot.
+#### Route production traffic automatically
+To rout production traffic automatically:
+1. Go to your app's reousrce page and selcet **Deployment slots**.
+2. In the **Traffic %** column of the slot you want to route to, specify by a percentage (beween 0 and 100) to represent tohe amount of total traffic you want to route. Select **Save**.
+
+After a client is automatically routed to a specific slot, it's "pinned" to that slot for the life of that client session. On the client browser, you van see which slot your session is pinned to by looking at the ```x-ms-routing-name``` cookie in your HTTP headers. A request that's routed to the "staging" slot has the cookie ```x-ms-routing-name=staging```. A request that is routed to the production slot has the cookie ```x-ms-routing-name=self```.
+#### Route production traffic manually
+To route production traffic manyally, you use the ```x-ms-routing-name``` query parameter.
+To let users opt out of your beta app, for example, you can put this link on your webpage:
+```html
+<a href="<webappname>.azurewebsites.net/?x-ms-routing-name=self">Go back to production app</a>
+```
+To let users opt in to your beta app, set the same query parameter to the name of the non-production slot.
+```html
+<a href="<webappname>.azurewebsite.net/?x-ms-routing-name=staging">Go to beta app</a>
+```
+By default, new slots are given a routing value of ```0%```, a default value is displayed in grey. When you explicitly set this value to ```0%``` it is displayed in black, your users can access the staging slot manually by using the ```x-ms-routing-name``` query parameter. But they won't be routed to the slot automatically because the routing percentage is set to 0.
